@@ -1,4 +1,4 @@
-package com.collathon.backendproject.mode.entity;
+package com.collathon.backendproject.domain;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -12,8 +12,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "user")
 public class User {
     @Id
-    private int id;
-    private long sequence;
+    private long id;
     private String name;
     private String userId;
     private String userPw;
