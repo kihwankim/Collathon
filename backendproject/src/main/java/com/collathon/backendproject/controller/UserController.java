@@ -18,6 +18,11 @@ public class UserController {
         return this.userService.saveUser(user);
     }
 
+    @PostMapping("/login")
+    public User login(@RequestBody User user) {
+        return null;
+    }
+
     @GetMapping("/hello")
     public String hello() {
         return "abc";

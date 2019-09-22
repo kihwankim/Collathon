@@ -16,10 +16,12 @@ public class User {
     private String name;
     private String userId;
     private String userPw;
+    private long usingBicycle;
 
     public User(String name, String userId, String userPw) {
         this.name = name;
         this.userId = userId;
         this.userPw = userPw;
+        this.usingBicycle = -1;
     }
 }
