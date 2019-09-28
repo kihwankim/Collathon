@@ -1,4 +1,4 @@
-package com.collathon.backendproject.user.domain;
+package com.collathon.backendproject.model.domain;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -23,5 +23,13 @@ public class User {
         this.userId = userId;
         this.userPw = userPw;
         this.usingBicycle = -1;
+    }
+
+    public User(String userId, String userPw) {
+        this.userId = userId;
+        this.userPw = userPw;
+    }
+
+    public User() {
     }
 }
