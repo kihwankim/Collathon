@@ -21,19 +21,28 @@ public class UserController {
     public ResponseEntity<ApiResponseMessage> saveUser(@RequestBody User user) {
         User result = this.userService.saveService(user);
         if (result != null) {
-            ApiResponseMessage message = new ApiResponseMessage("Success", "Login succusess", "", "");
+            ApiResponseMessage message = new ApiResponseMessage("Success", "Sign up succusess", "", "");
+
             return new ResponseEntity<>(message, HttpStatus.OK);
         }
         ApiResponseMessage message = new ApiResponseMessage("Error", "sign up fail", "", "");
-        return new ResponseEntity<>(message, HttpStatus.UNAUTHORIZED);
+        return new ResponseEntity<>(message, HttpStatus.FORBIDDEN);
     }
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping("/login")
-    public User login(@RequestParam(value = "userId") String id, @RequestParam(value = "userPw") String pw) {
+    public ResponseEntity<ApiResponseMessage> login(@RequestParam(value = "userId") String id, @RequestParam(value = "userPw") String pw) {
         User user = new User(id, pw);
+        User resultUser = this.userService.getService(user);
 
-        return this.userService.getService(user);
+        if (resultUser != null) {
+            ApiResponseMessage message = new ApiResponseMessage("Success", "Login succusess", "", "");
+
+            return new ResponseEntity<>(message, HttpStatus.OK);
+        }
+
+        ApiResponseMessage message = new ApiResponseMessage("Error", "sign up fail", "", "");
+        return new ResponseEntity<>(message, HttpStatus.UNAUTHORIZED);
     }
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")

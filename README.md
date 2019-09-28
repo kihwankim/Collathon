@@ -1,6 +1,8 @@
-# Collathon
+Collathon
+===
 collathon project in chungnam national univ
 
-##team member
-
+team member
+---
 Kihwan.Kim
+Seonghwan.Cho
