@@ -42,7 +42,7 @@ public class UserController {
 
             return new ResponseEntity<>(message, HttpStatus.OK);
         }
-        ApiResponseMessage message = new ApiResponseMessage("Error", "sign up fail", "", "");
+        ApiResponseMessage message = new ApiResponseMessage("Error", "sign in fail", "", "");
 
         return new ResponseEntity<>(message, HttpStatus.UNAUTHORIZED);
     }
