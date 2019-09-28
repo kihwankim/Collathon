@@ -8,4 +8,6 @@ public interface Dao<E> {
     public Optional<E> getOne(E data);
 
     public void deleteDataFromId(long id);
+
+    public E getOneById(long id);
 }

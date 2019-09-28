@@ -5,5 +5,5 @@ public interface ServiceInt<E> {
 
     public E getService(E data);
 
-    public void deleteService(long id);
+    public boolean deleteService(long id);
 }
