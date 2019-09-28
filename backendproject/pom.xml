@@ -37,16 +37,12 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-<<<<<<< HEAD
         <!-- lombok-->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
         </dependency>
-
-=======
->>>>>>> ed952b3a7df7aa7da3332abd1afa54b4522566c4
     </dependencies>
 
     <build>

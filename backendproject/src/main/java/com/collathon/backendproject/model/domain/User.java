@@ -25,8 +25,6 @@ public class User {
         this.usingBicycle = -1;
     }
 
-<<<<<<< HEAD:backendproject/src/main/java/com/collathon/backendproject/user/domain/User.java
-=======
     public User(String userId, String userPw) {
         this.userId = userId;
         this.userPw = userPw;
@@ -34,5 +32,4 @@ public class User {
 
     public User() {
     }
->>>>>>> ed952b3a7df7aa7da3332abd1afa54b4522566c4:backendproject/src/main/java/com/collathon/backendproject/model/domain/User.java
 }
