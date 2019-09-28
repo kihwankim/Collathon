@@ -25,6 +25,7 @@ public class UserDao {
                 findOne(new Query(where("getUserId").is(user.getUserId())), User.class));
     }
 
+
     public void deleteUser(long userId) {
 //        this.mongoTemplate.remove(new Query(), User.class);
     }

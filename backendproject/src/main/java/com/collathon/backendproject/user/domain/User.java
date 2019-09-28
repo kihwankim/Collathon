@@ -24,4 +24,5 @@ public class User {
         this.userPw = userPw;
         this.usingBicycle = -1;
     }
+
 }

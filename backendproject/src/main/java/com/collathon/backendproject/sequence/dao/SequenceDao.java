@@ -29,7 +29,6 @@ public class SequenceDao {
         if (sequence == null) {
             throw new SequenceException("Unable to get sequence id for key : " + key);
         }
-
-        return sequence.getSeq();
+        return 0;
     }
 }
