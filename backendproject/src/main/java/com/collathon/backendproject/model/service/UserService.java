@@ -1,9 +1,10 @@
 package com.collathon.backendproject.model.service;
 
-import com.collathon.backendproject.sequence.dao.SequenceDao;
 import com.collathon.backendproject.model.domain.User;
-import com.collathon.backendproject.model.repository.UserDao;
+import com.collathon.backendproject.model.repository.Dao;
+import com.collathon.backendproject.sequence.dao.SequenceDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -12,7 +13,8 @@ import java.util.Optional;
 public class UserService implements ServiceInt<User> {
     private static final String USER_SEQ_KEY = "user";
     @Autowired
-    private UserDao userDao;
+    @Qualifier("userDao")
+    private Dao<User> userDao;
     @Autowired
     private SequenceDao sequenceDao;
 
@@ -37,7 +39,13 @@ public class UserService implements ServiceInt<User> {
     }
 
     @Override
-    public void deleteService(long id) {
-        this.userDao.deleteDataFromId(id);
+    public boolean deleteService(long id) {
+        if (this.userDao.getOneById(id) != null) {
+            this.userDao.deleteDataFromId(id);
+
+            return true;
+        }
+
+        return false;
     }
 }

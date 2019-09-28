@@ -19,4 +19,9 @@ public class BicyvleDao implements Dao<Bicycle> {
     public void deleteDataFromId(long id) {
 
     }
+
+    @Override
+    public Bicycle getOneById(long id) {
+        return null;
+    }
 }

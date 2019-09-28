@@ -26,7 +26,7 @@ public class UserDao implements Dao<User> {
         System.out.println(user.getUserId());
         Query query = new Query(Criteria.where("userId").is(user.getUserId()));
         User findData = this.mongoTemplate.findOne(query, User.class);
-        if(findData == null){
+        if (findData == null) {
             return Optional.empty();
         }
 
@@ -35,6 +35,11 @@ public class UserDao implements Dao<User> {
 
     @Override
     public void deleteDataFromId(long id) {
-//        this.mongoTemplate.remove(new Query(), User.class);
+        this.mongoTemplate.remove(new Query(Criteria.where("_id").is(id)), User.class);
+    }
+
+    @Override
+    public User getOneById(long id) {
+        return this.mongoTemplate.findById(id, User.class);
     }
 }

@@ -2,10 +2,11 @@ package com.collathon.backendproject.model.controller;
 
 import com.collathon.backendproject.model.domain.ApiResponseMessage;
 import com.collathon.backendproject.model.domain.User;
-import com.collathon.backendproject.model.service.UserService;
+import com.collathon.backendproject.model.service.ServiceInt;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -14,7 +15,8 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     @Autowired
-    private UserService userService;
+    @Qualifier("userService")
+    private ServiceInt<User> userService;
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping("/save")
@@ -40,14 +42,22 @@ public class UserController {
 
             return new ResponseEntity<>(message, HttpStatus.OK);
         }
-
         ApiResponseMessage message = new ApiResponseMessage("Error", "sign up fail", "", "");
+
         return new ResponseEntity<>(message, HttpStatus.UNAUTHORIZED);
     }
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @DeleteMapping(value = "/delete/{id}")
-    public void deleteUserData(@PathVariable long id) {
-        this.userService.deleteService(id);
+    public ResponseEntity<ApiResponseMessage> deleteUserData(@PathVariable long id) {
+
+        if (this.userService.deleteService(id)) {
+            ApiResponseMessage message = new ApiResponseMessage("Success", "Delete Data succusess", "", "");
+
+            return new ResponseEntity<>(message, HttpStatus.OK);
+        }
+        ApiResponseMessage message = new ApiResponseMessage("Error", "This id is not in db", "", "");
+
+        return new ResponseEntity<>(message, HttpStatus.FORBIDDEN);
     }
 }
