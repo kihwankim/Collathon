@@ -23,7 +23,6 @@ public class UserDao implements Dao<User> {
 
     @Override
     public Optional<User> getOne(User user) {
-        System.out.println(user.getUserId());
         Query query = new Query(Criteria.where("userId").is(user.getUserId()));
         User findData = this.mongoTemplate.findOne(query, User.class);
         if (findData == null) {

@@ -33,12 +33,11 @@ public class UserController {
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping("/login")
-    public ResponseEntity<ApiResponseMessage> login(@RequestParam(value = "userId") String id, @RequestParam(value = "userPw") String pw) {
-        User user = new User(id, pw);
+    public ResponseEntity<ApiResponseMessage> login(@RequestBody User user) {
         User resultUser = this.userService.getService(user);
 
         if (resultUser != null) {
-            ApiResponseMessage message = new ApiResponseMessage("Success", "Login succusess", "", "");
+            ApiResponseMessage message = new ApiResponseMessage("Success", Long.toString(resultUser.getId()), "", "");
 
             return new ResponseEntity<>(message, HttpStatus.OK);
         }

@@ -15,8 +15,8 @@ import java.util.Date;
 public class Bicycle {
     @Id
     private long id;
-    private Date stratDate;
-    private Date arriveDate;
+    private Date startDate;
+    private Date endDate;
     private double latitude; // 위도
     private double longitude; // 경도
 }
