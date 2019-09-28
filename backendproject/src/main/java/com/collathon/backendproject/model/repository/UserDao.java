@@ -26,6 +26,10 @@ public class UserDao implements Dao<User> {
         System.out.println(user.getUserId());
         Query query = new Query(Criteria.where("userId").is(user.getUserId()));
         User findData = this.mongoTemplate.findOne(query, User.class);
+        if(findData == null){
+            return Optional.empty();
+        }
+
         return Optional.of(findData);
     }
 

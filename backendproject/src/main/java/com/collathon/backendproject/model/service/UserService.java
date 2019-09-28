@@ -21,10 +21,9 @@ public class UserService implements ServiceInt<User> {
     public User saveService(User user) {
         user.setId(this.sequenceDao.getNextUserId(UserService.USER_SEQ_KEY));
         Optional<User> findUser = this.userDao.getOne(user);
-        if(findUser.isPresent()){
-
+        if (findUser.isPresent()) {
+            return null;
         }
-
         return this.userDao.save(user);
     }
 
