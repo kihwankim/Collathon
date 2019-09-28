@@ -1,4 +1,4 @@
-package com.collathon.backendproject.domain;
+package com.collathon.backendproject.user.domain;
 
 import lombok.Getter;
 import lombok.Setter;

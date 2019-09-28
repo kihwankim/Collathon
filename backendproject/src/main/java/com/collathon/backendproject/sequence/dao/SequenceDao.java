@@ -1,7 +1,7 @@
-package com.collathon.backendproject.repository.sequence.dao;
+package com.collathon.backendproject.sequence.dao;
 
-import com.collathon.backendproject.repository.sequence.entity.Sequence;
-import com.collathon.backendproject.repository.sequence.exception.SequenceException;
+import com.collathon.backendproject.sequence.entity.Sequence;
+import com.collathon.backendproject.sequence.exception.SequenceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.FindAndModifyOptions;
 import org.springframework.data.mongodb.core.MongoOperations;

@@ -1,4 +1,4 @@
-package com.collathon.backendproject.repository.sequence.exception;
+package com.collathon.backendproject.sequence.exception;
 
 public class SequenceException extends RuntimeException {
     private String errMsg;

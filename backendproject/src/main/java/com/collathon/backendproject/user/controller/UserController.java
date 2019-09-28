@@ -1,7 +1,7 @@
-package com.collathon.backendproject.controller;
+package com.collathon.backendproject.user.controller;
 
-import com.collathon.backendproject.domain.User;
-import com.collathon.backendproject.service.UserService;
+import com.collathon.backendproject.user.domain.User;
+import com.collathon.backendproject.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @PostMapping("/save")
     public User saveUser(@RequestBody User user) {

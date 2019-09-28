@@ -1,4 +1,4 @@
-package com.collathon.backendproject.repository.sequence.entity;
+package com.collathon.backendproject.sequence.entity;
 
 import lombok.Getter;
 import lombok.Setter;

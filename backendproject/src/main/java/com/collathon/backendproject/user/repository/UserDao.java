@@ -1,9 +1,8 @@
-package com.collathon.backendproject.repository;
+package com.collathon.backendproject.user.repository;
 
-import com.collathon.backendproject.domain.User;
+import com.collathon.backendproject.user.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 
