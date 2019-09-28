@@ -1,10 +1,9 @@
 package com.collathon.backendproject.user.service;
 
+import com.collathon.backendproject.sequence.dao.SequenceDao;
 import com.collathon.backendproject.user.domain.User;
 import com.collathon.backendproject.user.repository.UserDao;
-import com.collathon.backendproject.sequence.dao.SequenceDao;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,14 +14,9 @@ public class UserService {
     private UserDao userDao;
     @Autowired
     private SequenceDao sequenceDao;
-    @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
 
 
     public User saveUser(User user) {
-        String enCryptPwd = this.passwordEncoder.encode(user.getUserPw());
-        user.setUserPw(enCryptPwd);
-
         user.setId(this.sequenceDao.getNextUserId(UserService.USER_SEQ_KEY));
         return this.userDao.saveUser(user);
     }
