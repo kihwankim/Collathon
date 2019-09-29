@@ -3,11 +3,15 @@ package com.collathon.backendproject.model.controller;
 import com.collathon.backendproject.model.domain.ApiResponseMessage;
 import com.collathon.backendproject.model.domain.User;
 import com.collathon.backendproject.model.service.ServiceInt;
+import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 @RestController
@@ -37,7 +41,12 @@ public class UserController {
         User resultUser = this.userService.getService(user);
 
         if (resultUser != null) {
-            ApiResponseMessage message = new ApiResponseMessage("Success", Long.toString(resultUser.getId()), "", "");
+            Map<String, Long> messageOfOutPutMesssage = new HashMap<>();
+            messageOfOutPutMesssage.put("id", resultUser.getId());
+            messageOfOutPutMesssage.put("usingBicycle", resultUser.getUsingBicycle());
+
+            Gson gson = new Gson();
+            ApiResponseMessage message = new ApiResponseMessage("Success", gson.toJson(messageOfOutPutMesssage), "", "");
 
             return new ResponseEntity<>(message, HttpStatus.OK);
         }
