@@ -14,7 +14,7 @@ import java.util.Date;
 @Document(collection = "bicycle")
 public class Bicycle {
     @Id
-    private long id;
+    private long bicycleNumber;
     private Date startDate;
     private Date endDate;
     private double latitude; // 위도
