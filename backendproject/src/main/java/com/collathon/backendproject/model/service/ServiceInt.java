@@ -6,4 +6,6 @@ public interface ServiceInt<E> {
     public E getService(E data);
 
     public boolean deleteService(long id);
+
+
 }

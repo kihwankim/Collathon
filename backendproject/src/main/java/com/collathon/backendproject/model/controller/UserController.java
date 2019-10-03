@@ -1,6 +1,7 @@
 package com.collathon.backendproject.model.controller;
 
-import com.collathon.backendproject.model.domain.ApiResponseMessage;
+import com.collathon.backendproject.model.domain.apireponse.ApiResponseLoginMessage;
+import com.collathon.backendproject.model.domain.apireponse.ApiResponseMessage;
 import com.collathon.backendproject.model.domain.User;
 import com.collathon.backendproject.model.service.ServiceInt;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +45,7 @@ public class UserController {
             mapData.put("id", resultUser.getId());
             mapData.put("usingBicycle", resultUser.getUsingBicycle());
 
-            ApiResponseMessage message = new ApiResponseMessage("Success", "Login success", mapData, "", "");
+            ApiResponseMessage message = new ApiResponseLoginMessage("Success", "Login success", mapData, "", "");
 
             return new ResponseEntity<>(message, HttpStatus.OK);
         }

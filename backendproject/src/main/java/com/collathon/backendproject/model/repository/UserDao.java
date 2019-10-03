@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
@@ -40,5 +41,11 @@ public class UserDao implements Dao<User> {
     @Override
     public User getOneById(long id) {
         return this.mongoTemplate.findById(id, User.class);
+    }
+
+    @Override
+    public boolean updateForRentFromId(User changeData) {
+//        Query query = new Query(Criteria.where("_id").is(id));
+        return false;
     }
 }
