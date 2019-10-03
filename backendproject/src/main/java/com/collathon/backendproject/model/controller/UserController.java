@@ -3,7 +3,6 @@ package com.collathon.backendproject.model.controller;
 import com.collathon.backendproject.model.domain.ApiResponseMessage;
 import com.collathon.backendproject.model.domain.User;
 import com.collathon.backendproject.model.service.ServiceInt;
-import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -41,15 +40,15 @@ public class UserController {
         User resultUser = this.userService.getService(user);
 
         if (resultUser != null) {
-            Map<String, Long> messageOfOutPutMesssage = new HashMap<>();
-            messageOfOutPutMesssage.put("id", resultUser.getId());
-            messageOfOutPutMesssage.put("usingBicycle", resultUser.getUsingBicycle());
+            Map<String, Long> mapData = new HashMap<>();
+            mapData.put("id", resultUser.getId());
+            mapData.put("usingBicycle", resultUser.getUsingBicycle());
 
-            Gson gson = new Gson();
-            ApiResponseMessage message = new ApiResponseMessage("Success", gson.toJson(messageOfOutPutMesssage), "", "");
+            ApiResponseMessage message = new ApiResponseMessage("Success", "Login success", mapData, "", "");
 
             return new ResponseEntity<>(message, HttpStatus.OK);
         }
+
         ApiResponseMessage message = new ApiResponseMessage("Error", "sign in fail", "", "");
 
         return new ResponseEntity<>(message, HttpStatus.UNAUTHORIZED);
