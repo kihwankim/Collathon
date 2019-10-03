@@ -1,18 +1,14 @@
 package com.collathon.backendproject.model.domain;
 
 import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
 import java.util.List;
 
-@Getter
-@Setter
-@ToString
+@Data
 @Builder
 @Document(collection = "bicycle")
 public class Bicycle {
@@ -25,6 +21,4 @@ public class Bicycle {
     private long nowUsingPersonId;
     private List<String> lastUserId;
 
-    public Bicycle() {
-    }
 }
