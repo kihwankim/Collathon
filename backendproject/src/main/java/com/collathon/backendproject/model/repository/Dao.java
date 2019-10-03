@@ -10,4 +10,6 @@ public interface Dao<E> {
     public void deleteDataFromId(long id);
 
     public E getOneById(long id);
+
+    public boolean updateForRentFromId(E changeData);
 }

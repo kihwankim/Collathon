@@ -1,13 +1,17 @@
 package com.collathon.backendproject.model.controller;
 
-import com.collathon.backendproject.model.domain.ApiResponseMessage;
+import com.collathon.backendproject.model.domain.apireponse.ApiResponseFindAllCloseBike;
+import com.collathon.backendproject.model.domain.apireponse.ApiResponseMessage;
 import com.collathon.backendproject.model.domain.Bicycle;
+import com.collathon.backendproject.model.service.BicycleService;
 import com.collathon.backendproject.model.service.ServiceInt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/bicycle")
@@ -46,9 +50,18 @@ public class BicycleController {
     }
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")
-    @GetMapping("/rent")
-    public ResponseEntity<ApiResponseMessage> rentBicycle() {
+    @GetMapping("/findCloseBicycle")
+    public ResponseEntity<ApiResponseMessage> findCloseBicycle(
+            @RequestParam("latitude") double latitude,
+            @RequestParam("longitude") double longitude) {
+        List<Bicycle> result = ((BicycleService) this.bicycleService).allBicycleData(latitude, longitude);
+        if (result != null) {
+            ApiResponseMessage message = new ApiResponseFindAllCloseBike("Success", "Login success", result, "", "");
+            return new ResponseEntity<>(message, HttpStatus.OK);
+        }
 
-        return null;
+        ApiResponseMessage message = new ApiResponseMessage("Error", "error", "", "");
+
+        return new ResponseEntity<>(message, HttpStatus.FORBIDDEN);
     }
 }
