@@ -1,6 +1,7 @@
 package com.collathon.backendproject.model.repository;
 
 import com.collathon.backendproject.model.domain.Bicycle;
+import com.mongodb.client.result.UpdateResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -10,7 +11,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Repository
 public class BicycleDao implements Dao<Bicycle> {
@@ -20,6 +20,7 @@ public class BicycleDao implements Dao<Bicycle> {
 
     @Override
     public Bicycle save(Bicycle data) {
+        data.setNowUsingPersonId(-1);
         return this.mongoTemplate.save(data);
     }
 
@@ -45,22 +46,20 @@ public class BicycleDao implements Dao<Bicycle> {
         return this.mongoTemplate.findById(id, Bicycle.class);
     }
 
-    @Override
-    public boolean updateForRentFromId(Bicycle changeData) {
-        Bicycle isThereData = this.getOneById(changeData.getBicycleNumber());
-        if (isThereData != null) {
-            this.mongoTemplate.save(isThereData);
-        }
-        return false;
+    public List<Bicycle> allBicycleData() {
+        return this.mongoTemplate.findAll(Bicycle.class);
     }
 
-    public List<Bicycle> allBicycleData(double latitude, double longitude) {
-        List<Bicycle> bicycleList = this.mongoTemplate.findAll(Bicycle.class);
-        return bicycleList.stream()
-                .filter(data -> latitude - 0.03 < data.getLatitude())
-                .filter(data -> data.getLatitude() < latitude + 0.03)
-                .filter(data -> longitude - 0.015 < data.getLongitude())
-                .filter(data -> data.getLongitude() < longitude + 0.015)
-                .collect(Collectors.toList());
+    @Override
+    public boolean rent(Bicycle changeData) {
+        Query query = new Query(Criteria.where("_id").is(changeData.getBicycleNumber()));
+        Update update = new Update()
+                .set("nowUsingPersonId", changeData.getNowUsingPersonId())
+                .set("startDate", changeData.getStartDate())
+                .set("endDate", changeData.getEndDate());
+        UpdateResult result = this.mongoTemplate.updateFirst(query, update, Bicycle.class);
+
+        return result.wasAcknowledged();
     }
+
 }

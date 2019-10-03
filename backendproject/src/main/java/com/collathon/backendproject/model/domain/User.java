@@ -1,5 +1,6 @@
 package com.collathon.backendproject.model.domain;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -9,6 +10,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Getter
 @Setter
 @ToString
+@Builder
 @Document(collection = "user")
 public class User {
     @Id
@@ -28,6 +30,14 @@ public class User {
     public User(String userId, String userPw) {
         this.userId = userId;
         this.userPw = userPw;
+    }
+
+    public User(User user) {
+        this.id = user.getId();
+        this.name = user.getName();
+        this.userId = user.getUserId();
+        this.userPw = user.getUserPw();
+        this.usingBicycle = user.getUsingBicycle();
     }
 
     public User() {

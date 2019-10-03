@@ -8,8 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import javax.xml.crypto.Data;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class BicycleService implements ServiceInt<Bicycle> {
@@ -51,7 +54,34 @@ public class BicycleService implements ServiceInt<Bicycle> {
         return false;
     }
 
+    @Override
+    public boolean rent(long userId, long bicycleNumber) {
+        Date nowDate = new Date();
+        Date returnDate = new Date();
+        returnDate.setMinutes(nowDate.getMinutes() + 30);
+
+        Bicycle bicycle = Bicycle.builder()
+                .bicycleNumber(bicycleNumber)
+                .nowUsingPersonId(userId)
+                .startDate(nowDate)
+                .startDate(returnDate)
+                .build();
+
+        return this.bicycleDao.rent(bicycle);
+    }
+
+    @Override
+    public Bicycle getDataFromId(long id) {
+        return this.bicycleDao.getOneById(id);
+    }
+
     public List<Bicycle> allBicycleData(double latitude, double longitude) {
-        return ((BicycleDao) this.bicycleDao).allBicycleData(latitude, longitude);
+        List<Bicycle> allBicycleList = ((BicycleDao) this.bicycleDao).allBicycleData();
+        return allBicycleList.stream()
+                .filter(data -> latitude - 0.03 < data.getLatitude())
+                .filter(data -> data.getLatitude() < latitude + 0.03)
+                .filter(data -> longitude - 0.015 < data.getLongitude())
+                .filter(data -> data.getLongitude() < longitude + 0.015)
+                .collect(Collectors.toList());
     }
 }

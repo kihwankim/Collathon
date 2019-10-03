@@ -24,17 +24,38 @@ public class RentController {
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @GetMapping("/rent")
-    public ResponseEntity<ApiResponseMessage> rentBicycle(@RequestParam("userId") long userId, @RequestParam("bicycleNumber") long bicycleNumber) {
+    public ResponseEntity<ApiResponseMessage> rentBicycle(
+            @RequestParam("userId") long userId,
+            @RequestParam("bicycleNumber") long bicycleNumber) {
 
+        User beforeUserData = this.userService.getDataFromId(userId);
+        Bicycle beforeBicycleData = this.bicycleService.getDataFromId(bicycleNumber);
 
-        ApiResponseMessage message = new ApiResponseMessage("Success", "hello", "", "");
-        return new ResponseEntity<>(message, HttpStatus.OK);
+        if (beforeUserData.getUsingBicycle() != -1 || beforeBicycleData.getNowUsingPersonId() != -1) {
+            boolean resultOfBicycle = this.bicycleService.rent(userId, bicycleNumber);
+            boolean resultOfUser = this.userService.rent(userId, bicycleNumber);
+
+            if (resultOfBicycle && resultOfUser) {
+                ApiResponseMessage message = new ApiResponseMessage("Error", "he have already been using bicycle", "", "");
+
+                return new ResponseEntity<>(message, HttpStatus.OK);
+            } else {
+                // 원상태로 돌리기 -> 반납 코드 작성 후 반납 코드 응용할 것
+            }
+        }
+
+        ApiResponseMessage message = new ApiResponseMessage("Error",
+                "You have already been using bicycle or This bicycle is already using",
+                "", "");
+
+        return new ResponseEntity<>(message, HttpStatus.FORBIDDEN);
     }
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @GetMapping("/return")
-    public ResponseEntity<ApiResponseMessage> returnBicycle(@RequestParam("userId") long userId, @RequestParam("bicycleNumber") long bicycleNumber) {
-
+    public ResponseEntity<ApiResponseMessage> returnBicycle(
+            @RequestParam("userId") long userId,
+            @RequestParam("bicycleNumber") long bicycleNumber) {
 
         ApiResponseMessage message = new ApiResponseMessage("Success", "hello", "", "");
         return new ResponseEntity<>(message, HttpStatus.OK);
