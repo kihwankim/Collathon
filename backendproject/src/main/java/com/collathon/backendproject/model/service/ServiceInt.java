@@ -7,5 +7,7 @@ public interface ServiceInt<E> {
 
     public boolean deleteService(long id);
 
+    public boolean rent(long userId, long bicycleNumber);
 
+    public E getDataFromId(long id);
 }

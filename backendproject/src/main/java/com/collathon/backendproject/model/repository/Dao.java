@@ -11,5 +11,5 @@ public interface Dao<E> {
 
     public E getOneById(long id);
 
-    public boolean updateForRentFromId(E changeData);
+    public boolean rent(E changeData);
 }

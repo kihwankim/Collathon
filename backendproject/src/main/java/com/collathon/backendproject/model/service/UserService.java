@@ -48,4 +48,14 @@ public class UserService implements ServiceInt<User> {
 
         return false;
     }
+
+    @Override
+    public boolean rent(long userId, long bicycleNumber) {
+        return false;
+    }
+
+    @Override
+    public User getDataFromId(long id) {
+        return this.userDao.getOneById(id);
+    }
 }

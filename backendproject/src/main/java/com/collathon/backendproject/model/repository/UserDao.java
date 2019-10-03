@@ -44,7 +44,7 @@ public class UserDao implements Dao<User> {
     }
 
     @Override
-    public boolean updateForRentFromId(User changeData) {
+    public boolean rent(User changeData) {
 //        Query query = new Query(Criteria.where("_id").is(id));
         return false;
     }

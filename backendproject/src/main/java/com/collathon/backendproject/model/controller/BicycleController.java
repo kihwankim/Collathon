@@ -56,7 +56,7 @@ public class BicycleController {
             @RequestParam("longitude") double longitude) {
         List<Bicycle> result = ((BicycleService) this.bicycleService).allBicycleData(latitude, longitude);
         if (result != null) {
-            ApiResponseMessage message = new ApiResponseFindAllCloseBike("Success", "Login success", result, "", "");
+            ApiResponseMessage message = new ApiResponseFindAllCloseBike("Success", "All data", result, "", "");
             return new ResponseEntity<>(message, HttpStatus.OK);
         }
 
