@@ -1,7 +1,6 @@
 package com.collathon.backendproject.sequence.dao;
 
 import com.collathon.backendproject.sequence.entity.Sequence;
-import com.collathon.backendproject.sequence.exception.SequenceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.FindAndModifyOptions;
 import org.springframework.data.mongodb.core.MongoOperations;
@@ -27,9 +26,17 @@ public class SequenceDao {
         Sequence sequence = this.mongoOperations.findAndModify(query, update, findAndModifyOptions, Sequence.class);
 
         if (sequence == null) {
-            throw new SequenceException("Unable to get sequence id for key : " + key);
+            return this.storeMinData(key).getSeq();
         }
 
         return sequence.getSeq();
+    }
+
+    private Sequence storeMinData(String keyId) {
+        Sequence sequence = new Sequence();
+        sequence.setId(keyId);
+        this.mongoOperations.save(sequence);
+
+        return sequence;
     }
 }
