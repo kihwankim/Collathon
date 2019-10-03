@@ -7,6 +7,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
@@ -19,4 +20,5 @@ public class Bicycle {
     private Date endDate;
     private double latitude; // 위도
     private double longitude; // 경도
+    private List<String> lastUserId;
 }
