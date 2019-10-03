@@ -16,9 +16,9 @@ public class UserDao implements Dao<User> {
     private MongoTemplate mongoTemplate;
 
     @Override
-    public User save(User user) {
-        user.setUsingBicycle(-1);
-        return <User>this.mongoTemplate.save(user);
+    public User save(User data) {
+        data.setUsingBicycle(-1);
+        return <User>this.mongoTemplate.save(data);
     }
 
     @Override

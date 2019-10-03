@@ -15,8 +15,8 @@ public class BicycleDao implements Dao<Bicycle> {
     private MongoTemplate mongoTemplate;
 
     @Override
-    public Bicycle save(Bicycle user) {
-        return <Bicycle>this.mongoTemplate.save(user);
+    public Bicycle save(Bicycle data) {
+        return <Bicycle>this.mongoTemplate.save(data);
     }
 
     @Override
