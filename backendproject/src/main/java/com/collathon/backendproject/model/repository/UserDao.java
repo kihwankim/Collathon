@@ -44,8 +44,11 @@ public class UserDao implements Dao<User> {
     }
 
     @Override
-    public boolean rent(User changeData) {
-//        Query query = new Query(Criteria.where("_id").is(id));
-        return false;
+    public boolean rent(User changeData) { // 대여 서비스 실행
+        Query query = new Query(Criteria.where("_id").is(changeData.getId()));
+        Update update = new Update();
+        update.set("usingBicycle", changeData.getUsingBicycle());
+
+        return this.mongoTemplate.updateFirst(query, update, User.class).wasAcknowledged();
     }
 }

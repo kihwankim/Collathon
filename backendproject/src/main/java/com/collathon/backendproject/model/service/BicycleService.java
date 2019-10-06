@@ -1,6 +1,7 @@
 package com.collathon.backendproject.model.service;
 
 import com.collathon.backendproject.model.domain.Bicycle;
+import com.collathon.backendproject.model.domain.User;
 import com.collathon.backendproject.model.repository.BicycleDao;
 import com.collathon.backendproject.model.repository.Dao;
 import com.collathon.backendproject.sequence.dao.SequenceDao;
@@ -58,7 +59,7 @@ public class BicycleService implements ServiceInt<Bicycle> {
     public boolean rent(long userId, long bicycleNumber) {
         Date nowDate = new Date();
         Date returnDate = new Date();
-        returnDate.setMinutes(nowDate.getMinutes() + 30);
+        returnDate.setMinutes(nowDate.getMinutes() + 30); // 코드 수정 하기
 
         Bicycle bicycle = Bicycle.builder()
                 .bicycleNumber(bicycleNumber)
@@ -73,6 +74,11 @@ public class BicycleService implements ServiceInt<Bicycle> {
     @Override
     public Bicycle getDataFromId(long id) {
         return this.bicycleDao.getOneById(id);
+    }
+
+    @Override
+    public boolean returnBicycle(User user, Bicycle bicycle) {
+        return false;
     }
 
     public List<Bicycle> allBicycleData(double latitude, double longitude) {

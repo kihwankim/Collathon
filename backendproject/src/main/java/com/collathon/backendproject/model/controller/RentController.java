@@ -36,12 +36,14 @@ public class RentController {
             boolean resultOfUser = this.userService.rent(userId, bicycleNumber);
 
             if (resultOfBicycle && resultOfUser) {
-                ApiResponseMessage message = new ApiResponseMessage("Error", "he have already been using bicycle", "", "");
+                ApiResponseMessage message = new ApiResponseMessage("Success", "Rent success", "", "");
 
                 return new ResponseEntity<>(message, HttpStatus.OK);
-            } else {
-                // 원상태로 돌리기 -> 반납 코드 작성 후 반납 코드 응용할 것
             }
+            // 원상태로 돌리기 -> 반납 코드 작성 후 반납 코드 응용할 것
+            /*
+             * 다시 돌리는 코드 작성
+             */
         }
 
         ApiResponseMessage message = new ApiResponseMessage("Error",
@@ -55,9 +57,36 @@ public class RentController {
     @GetMapping("/return")
     public ResponseEntity<ApiResponseMessage> returnBicycle(
             @RequestParam("userId") long userId,
-            @RequestParam("bicycleNumber") long bicycleNumber) {
+            @RequestParam("bicycleNumber") long bicycleNumber,
+            @RequestParam("latitude") double latitude,
+            @RequestParam("longitude") double longitude) {
 
-        ApiResponseMessage message = new ApiResponseMessage("Success", "hello", "", "");
-        return new ResponseEntity<>(message, HttpStatus.OK);
+        Bicycle bicycle = Bicycle.builder()
+                .bicycleNumber(bicycleNumber)
+                .latitude(latitude)
+                .longitude(longitude)
+                .startDate(null)
+                .endDate(null)
+                .build();
+
+        User user = new User();
+        user.setId(userId); // id 값
+
+        boolean resultOfReturnBicycle = this.bicycleService.returnBicycle(null, bicycle);
+        boolean resultOfReturnUser = this.userService.returnBicycle(user, bicycle);
+
+        if (resultOfReturnBicycle && resultOfReturnUser) {
+            ApiResponseMessage message = new ApiResponseMessage("Success", "Return success", "", "");
+
+            return new ResponseEntity<>(message, HttpStatus.OK);
+        }
+
+        /*
+         * 원상태로 돌리는 코드
+         */
+
+        ApiResponseMessage message = new ApiResponseMessage("Error", "Return Fail", "", "");
+
+        return new ResponseEntity<>(message, HttpStatus.FORBIDDEN);
     }
 }
