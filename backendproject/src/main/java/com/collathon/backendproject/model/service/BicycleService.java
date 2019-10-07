@@ -1,7 +1,6 @@
 package com.collathon.backendproject.model.service;
 
 import com.collathon.backendproject.model.domain.Bicycle;
-import com.collathon.backendproject.model.domain.User;
 import com.collathon.backendproject.model.repository.BicycleDao;
 import com.collathon.backendproject.model.repository.Dao;
 import com.collathon.backendproject.sequence.dao.SequenceDao;
@@ -9,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import javax.xml.crypto.Data;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -85,6 +83,11 @@ public class BicycleService implements ServiceInt<Bicycle> {
         }
 
         return this.bicycleDao.returnBicycle(bicycle);
+    }
+
+    @Override
+    public boolean modify(Bicycle component) {
+        return this.bicycleDao.modifyBefore(component) != null;
     }
 
     public List<Bicycle> allBicycleData(double latitude, double longitude) {

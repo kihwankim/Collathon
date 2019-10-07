@@ -1,6 +1,5 @@
 package com.collathon.backendproject.model.service;
 
-import com.collathon.backendproject.model.domain.Bicycle;
 import com.collathon.backendproject.model.domain.User;
 import com.collathon.backendproject.model.repository.Dao;
 import com.collathon.backendproject.sequence.dao.SequenceDao;
@@ -67,5 +66,10 @@ public class UserService implements ServiceInt<User> {
     @Override
     public boolean returnBicycle(User user) {
         return this.userDao.returnBicycle(user);
+    }
+
+    @Override
+    public boolean modify(User component) {
+        return this.userDao.modifyBefore(component) != null;
     }
 }

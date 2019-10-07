@@ -1,8 +1,8 @@
 package com.collathon.backendproject.model.controller;
 
+import com.collathon.backendproject.model.domain.Bicycle;
 import com.collathon.backendproject.model.domain.apireponse.ApiResponseFindAllCloseBike;
 import com.collathon.backendproject.model.domain.apireponse.ApiResponseMessage;
-import com.collathon.backendproject.model.domain.Bicycle;
 import com.collathon.backendproject.model.service.BicycleService;
 import com.collathon.backendproject.model.service.ServiceInt;
 import org.springframework.beans.factory.annotation.Autowired;

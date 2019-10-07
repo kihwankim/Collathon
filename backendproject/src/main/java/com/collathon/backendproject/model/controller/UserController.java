@@ -1,8 +1,8 @@
 package com.collathon.backendproject.model.controller;
 
+import com.collathon.backendproject.model.domain.User;
 import com.collathon.backendproject.model.domain.apireponse.ApiResponseLoginMessage;
 import com.collathon.backendproject.model.domain.apireponse.ApiResponseMessage;
-import com.collathon.backendproject.model.domain.User;
 import com.collathon.backendproject.model.service.ServiceInt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

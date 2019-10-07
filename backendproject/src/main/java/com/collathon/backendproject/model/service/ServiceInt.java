@@ -13,7 +13,5 @@ public interface ServiceInt<E> {
 
     public boolean returnBicycle(E component);
 
-    default public boolean modify(E component) {
-        return component != null;
-    }
+    public boolean modify(E component);
 }
