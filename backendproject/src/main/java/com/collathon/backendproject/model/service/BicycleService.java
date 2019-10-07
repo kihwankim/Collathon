@@ -77,8 +77,14 @@ public class BicycleService implements ServiceInt<Bicycle> {
     }
 
     @Override
-    public boolean returnBicycle(User user, Bicycle bicycle) {
-        return false;
+    public boolean returnBicycle(Bicycle bicycle) {
+        if (bicycle != null && bicycle.getLastUserId() != null) {
+            while (bicycle.getLastUserId().size() > 5) {
+                bicycle.getLastUserId().remove(0);
+            }
+        }
+
+        return this.bicycleDao.returnBicycle(bicycle);
     }
 
     public List<Bicycle> allBicycleData(double latitude, double longitude) {

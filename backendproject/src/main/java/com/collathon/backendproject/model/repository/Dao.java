@@ -12,4 +12,8 @@ public interface Dao<E> {
     public E getOneById(long id);
 
     public boolean rent(E changeData);
+
+    public boolean returnBicycle(E data);
+
+    public E modifyBefore(E data);
 }

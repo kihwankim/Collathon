@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/rental")
 public class RentController {
@@ -31,7 +33,8 @@ public class RentController {
         User beforeUserData = this.userService.getDataFromId(userId);
         Bicycle beforeBicycleData = this.bicycleService.getDataFromId(bicycleNumber);
 
-        if (beforeUserData.getUsingBicycle() != -1 || beforeBicycleData.getNowUsingPersonId() != -1) {
+        if (beforeBicycleData != null && beforeUserData != null &&
+                beforeUserData.getUsingBicycle() == -1 && beforeBicycleData.getNowUsingPersonId() == -1) {
             boolean resultOfBicycle = this.bicycleService.rent(userId, bicycleNumber);
             boolean resultOfUser = this.userService.rent(userId, bicycleNumber);
 
@@ -40,10 +43,9 @@ public class RentController {
 
                 return new ResponseEntity<>(message, HttpStatus.OK);
             }
-            // 원상태로 돌리기 -> 반납 코드 작성 후 반납 코드 응용할 것
-            /*
-             * 다시 돌리는 코드 작성
-             */
+
+            this.bicycleService.modify(beforeBicycleData);
+            this.userService.modify(beforeUserData);
         }
 
         ApiResponseMessage message = new ApiResponseMessage("Error",
@@ -61,29 +63,34 @@ public class RentController {
             @RequestParam("latitude") double latitude,
             @RequestParam("longitude") double longitude) {
 
+
+        User beforeUserData = this.userService.getDataFromId(userId);
+        Bicycle beforeBicycleData = this.bicycleService.getDataFromId(bicycleNumber);
+
+        List<String> beforeUsedUserList = beforeBicycleData.getLastUserId();
+        beforeUsedUserList.add(beforeUserData.getUserId());
+
         Bicycle bicycle = Bicycle.builder()
                 .bicycleNumber(bicycleNumber)
                 .latitude(latitude)
                 .longitude(longitude)
                 .startDate(null)
                 .endDate(null)
+                .lastUserId(beforeUsedUserList)
                 .build();
 
-        User user = new User();
-        user.setId(userId); // id 값
+        User user = User.builder()
+                .id(userId)
+                .build();
+        if (beforeBicycleData != null && beforeUserData != null) {
+            if (this.bicycleService.returnBicycle(bicycle) && this.userService.returnBicycle(user)) {
+                ApiResponseMessage message = new ApiResponseMessage("Success", "Return success", "", "");
 
-        boolean resultOfReturnBicycle = this.bicycleService.returnBicycle(null, bicycle);
-        boolean resultOfReturnUser = this.userService.returnBicycle(user, bicycle);
-
-        if (resultOfReturnBicycle && resultOfReturnUser) {
-            ApiResponseMessage message = new ApiResponseMessage("Success", "Return success", "", "");
-
-            return new ResponseEntity<>(message, HttpStatus.OK);
+                return new ResponseEntity<>(message, HttpStatus.OK);
+            }
+            this.bicycleService.modify(beforeBicycleData);
+            this.userService.modify(beforeUserData);
         }
-
-        /*
-         * 원상태로 돌리는 코드
-         */
 
         ApiResponseMessage message = new ApiResponseMessage("Error", "Return Fail", "", "");
 

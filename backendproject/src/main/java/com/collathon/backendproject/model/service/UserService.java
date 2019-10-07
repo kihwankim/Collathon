@@ -65,7 +65,7 @@ public class UserService implements ServiceInt<User> {
     }
 
     @Override
-    public boolean returnBicycle(User user, Bicycle bicycle) {
-        return false;
+    public boolean returnBicycle(User user) {
+        return this.userDao.returnBicycle(user);
     }
 }
