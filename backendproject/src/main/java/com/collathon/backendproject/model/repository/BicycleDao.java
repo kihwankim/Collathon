@@ -62,4 +62,25 @@ public class BicycleDao implements Dao<Bicycle> {
         return result.wasAcknowledged();
     }
 
+    @Override
+    public boolean returnBicycle(Bicycle data) {
+        return this.mongoTemplate.updateFirst(new Query(Criteria.where("_id").is(data.getBicycleNumber())),
+                new Update()
+                        .set("nowUsingPersonId", -1)
+                        .set("startDate", null)
+                        .set("endDate", null)
+                        .set("latitude", data.getLatitude())
+                        .set("longitude", data.getLongitude())
+                        .set("lastUserId", data.getLastUserId()),
+                Bicycle.class).wasAcknowledged();
+    }
+
+    @Override
+    public Bicycle modifyBefore(Bicycle data) {
+        if (this.getOneById(data.getBicycleNumber()) != null) {
+            return this.mongoTemplate.save(data); // update
+        }
+
+        return null;
+    }
 }

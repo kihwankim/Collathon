@@ -51,4 +51,21 @@ public class UserDao implements Dao<User> {
 
         return this.mongoTemplate.updateFirst(query, update, User.class).wasAcknowledged();
     }
+
+    @Override
+    public boolean returnBicycle(User data) {
+        return this.mongoTemplate.updateFirst(
+                new Query(Criteria.where("_id").is(data.getId())),
+                new Update().set("usingBicycle", -1),
+                User.class).wasAcknowledged();
+    }
+
+    @Override
+    public User modifyBefore(User data) {
+        if (this.getOneById(data.getId()) != null) {
+            return this.mongoTemplate.save(data); // update
+        }
+
+        return null;
+    }
 }
