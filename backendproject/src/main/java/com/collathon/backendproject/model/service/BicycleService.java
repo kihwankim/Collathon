@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -55,15 +56,16 @@ public class BicycleService implements ServiceInt<Bicycle> {
 
     @Override
     public boolean rent(long userId, long bicycleNumber) {
-        Date nowDate = new Date();
-        Date returnDate = new Date();
-        returnDate.setMinutes(nowDate.getMinutes() + 30); // 코드 수정 하기
+        Calendar nowCal = Calendar.getInstance();
+        nowCal.setTime(new Date());
+        Calendar returnCal = (Calendar) nowCal.clone();
+        returnCal.add(Calendar.MINUTE, 30);
 
         Bicycle bicycle = Bicycle.builder()
                 .bicycleNumber(bicycleNumber)
                 .nowUsingPersonId(userId)
-                .startDate(nowDate)
-                .startDate(returnDate)
+                .startDate(nowCal)
+                .startDate(returnCal)
                 .build();
 
         return this.bicycleDao.rent(bicycle);
