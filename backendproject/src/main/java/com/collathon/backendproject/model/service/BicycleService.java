@@ -56,28 +56,26 @@ public class BicycleService implements ServiceInt<Bicycle> {
 
     @Override
     public boolean rent(long userId, long bicycleNumber) {
-        Calendar nowCal = Calendar.getInstance();
-        nowCal.setTime(new Date());
-        Calendar returnCal = (Calendar) nowCal.clone();
-        returnCal.add(Calendar.MINUTE, 30);
+        Date nowDate = new Date();
+        Date returnDate = calculateDate(nowDate);
 
         Bicycle bicycle = Bicycle.builder()
                 .bicycleNumber(bicycleNumber)
                 .nowUsingPersonId(userId)
-                .startDate(nowCal)
-                .startDate(returnCal)
+                .startDate(nowDate)
+                .startDate(returnDate)
                 .build();
 
         return this.bicycleDao.rent(bicycle);
     }
 
-    private Date calculateDate(Date nowDate, int minute) {
+    private Date calculateDate(Date nowDate) {
+        int minute = 30;
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(nowDate);
         calendar.add(calendar.MINUTE, minute);
-        Date date = new Date(calendar.getTimeInMillis());
 
-        return date;
+        return new Date(calendar.getTimeInMillis());
     }
 
     @Override
