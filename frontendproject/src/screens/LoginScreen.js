@@ -25,9 +25,14 @@ class LoginScreen extends Component {
         })
         .then(res => {
           if(res.status===200){
+            if(this.state.userId != 'Admin'){
             alert("환영합니다! " + this.state.userId)
-            this.props.navigation.navigate("Home",{isLogin:res.data.data}) 
-          }
+            this.props.navigation.navigate("Home",{isLogin:res.data.data})
+            } else{
+              alert("Admin Page로 이동합니다.")
+              this.props.navigation.navigate("Admin",{})
+            } 
+          } 
         });
     } 
   };
@@ -58,6 +63,7 @@ class LoginScreen extends Component {
                   size={24}
                   color='white'
                 />}
+                inputStyle={{color: 'white'}}
               />
               </View>
               <View style={styles.thirdRow}>
@@ -72,6 +78,7 @@ class LoginScreen extends Component {
                   size={24}
                   color='white'
                 />}
+                inputStyle={{color: 'white'}}
                 />
                 </View>
           </View>

@@ -8,6 +8,7 @@ import MapScreen from "./src/screens/MapScreen"
 import LoginScreen from "./src/screens/LoginScreen"
 import SignupScreen from "./src/screens/SignupScreen"
 import RunningScreen from "./src/screens/RunningScreen"
+import AdminScreen from "./src/screens/AdminScreen"
 import {createBottomTabNavigator,BottomTabBar} from "react-navigation-tabs"
 import {createMaterialBottomTabNavigator} from "react-navigation-material-bottom-tabs"
  const TabBarComponent =props=>(
@@ -22,7 +23,8 @@ const navigator = createStackNavigator(
     Map:MapScreen, 
     Login:LoginScreen,
     Signup:SignupScreen,
-    Running:RunningScreen
+    Running:RunningScreen,
+    Admin:AdminScreen
   },
   {
     headerMode:"none",

@@ -62,6 +62,7 @@ class LoginScreen extends Component {
                 size={24}
                 color='white'
               />}
+              inputStyle={{color: 'white'}}
             />
           </View>
           <View style={styles.thirdRow}>
@@ -74,6 +75,7 @@ class LoginScreen extends Component {
                 size={24}
                 color='white'
               />}
+              inputStyle={{color: 'white'}}
             />
           </View>
           <View style={styles.thirdRow}>
@@ -87,6 +89,7 @@ class LoginScreen extends Component {
                 size={24}
                 color='white'
               />}
+              inputStyle={{color: 'white'}}
             />
           </View>
           <View style={styles.thirdRow}>
