@@ -32,7 +32,7 @@ public class UserService implements ServiceInt<User> {
     @Override
     public User getService(User user) {
         Optional<User> result = this.userDao.getOne(user);
-        if (result.isPresent()) {
+        if (result.isPresent() && user.getUserPw().equals(result.get().getUserPw())) {
             return result.get();
         }
         return null;

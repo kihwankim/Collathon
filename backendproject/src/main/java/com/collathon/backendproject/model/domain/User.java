@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import java.util.Date;
 
 @Data
 @Builder
@@ -14,5 +15,6 @@ public class User {
     private String name;
     private String userId;
     private String userPw;
+    private Date birthDate;
     private long usingBicycle;
 }
