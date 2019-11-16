@@ -94,6 +94,11 @@ public class BicycleService implements ServiceInt<Bicycle> {
 
     public List<Bicycle> allBicycleData(double latitude, double longitude) {
         List<Bicycle> allBicycleList = ((BicycleDao) this.bicycleDao).allBicycleData();
+
+        if (Double.isNaN(latitude)) {
+            return allBicycleList;
+        }
+
         return allBicycleList.stream()
                 .filter(data -> latitude - 0.03 < data.getLatitude())
                 .filter(data -> data.getLatitude() < latitude + 0.03)

@@ -50,6 +50,19 @@ public class BicycleController {
     }
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @GetMapping(value = "/getAll")
+    public ResponseEntity<ApiResponseMessage> getAllBicycleData() {
+        List<Bicycle> result = ((BicycleService) this.bicycleService).allBicycleData(Double.NaN, Double.NaN);
+        if (result != null) {
+            ApiResponseMessage message = new ApiResponseFindAllCloseBike("Success", "All data", result, "", "");
+            return new ResponseEntity<>(message, HttpStatus.OK);
+        }
+        ApiResponseMessage message = new ApiResponseMessage("Error", "error", "", "");
+
+        return new ResponseEntity<>(message, HttpStatus.FORBIDDEN);
+    }
+
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @GetMapping("/findCloseBicycle")
     public ResponseEntity<ApiResponseMessage> findCloseBicycle(
             @RequestParam("latitude") double latitude,
