@@ -26,11 +26,11 @@ public class BicycleController {
     public ResponseEntity<ApiResponseMessage> saveBicycle(@RequestBody Bicycle bicycle) {
         Bicycle result = this.bicycleService.saveService(bicycle);
         if (result != null) {
-            ApiResponseMessage message = new ApiResponseMessage("Success", "Insert bicycle", "", "");
+            ApiResponseMessage message = new ApiResponseMessage("Success", Long.toString(result.getBicycleNumber()), "", "");
             return new ResponseEntity<>(message, HttpStatus.OK);
         }
-
         ApiResponseMessage message = new ApiResponseMessage("Error", "There is same id number", "", "");
+
         return new ResponseEntity<>(message, HttpStatus.FORBIDDEN);
     }
 
