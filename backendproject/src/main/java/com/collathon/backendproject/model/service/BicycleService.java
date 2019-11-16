@@ -71,6 +71,15 @@ public class BicycleService implements ServiceInt<Bicycle> {
         return this.bicycleDao.rent(bicycle);
     }
 
+    private Date calculateDate(Date nowDate, int minute) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(nowDate);
+        calendar.add(calendar.MINUTE, minute);
+        Date date = new Date(calendar.getTimeInMillis());
+
+        return date;
+    }
+
     @Override
     public Bicycle getDataFromId(long id) {
         return this.bicycleDao.getOneById(id);
