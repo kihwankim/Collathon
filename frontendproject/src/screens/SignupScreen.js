@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { StyleSheet, KeyboardAvoidingView,Image, Text, View, TextInput } from "react-native";
+import { StyleSheet, KeyboardAvoidingView,Image, Text, View, TextInput, Alert } from "react-native";
 import DatePicker from "react-native-datepicker";
 import axios from "axios";
 import { Input, Button } from "react-native-elements";
@@ -17,17 +17,24 @@ class LoginScreen extends Component {
   }
 
   sendUserData = () => {
+    
     if (!(this.state.name && this.state.userId && this.state.userPw)) {
       alert("모두 입력해주세요!");
     } else {
-      // axios.post("http://192.168.0.4:8090/user/save",{
-      //   name:this.state.userId,
-      //   userId:this.state.userId,
-      //   userPw:this.state.userPw
-      // }).then(res=>{
-      //   console.log(res)
-      // })
-      console.log(this.state);
+      const splitDate = this.state.date.split("-");
+      this.state.date = new Date(parseInt(splitDate[0]), parseInt(splitDate[1]) -1, parseInt(splitDate[2]));
+      axios.post("http://192.168.0.227:8090/user/save",{
+        name:this.state.userId,
+        userId:this.state.userId,
+        userPw:this.state.userPw,
+        birthDate:this.state.date
+      }).then(res=>{
+        if(res.status===200){
+        alert("회원가입이 완료되었습니다.");
+        this.props.navigation.navigate("Home")
+        }
+        console.log(res)
+      })
     }
   };
   render() {
@@ -71,6 +78,7 @@ class LoginScreen extends Component {
           </View>
           <View style={styles.thirdRow}>
             <Input
+              secureTextEntry
               label="Password"
               placeholder="비밀번호를 입력해주세요"
               onChangeText={value => this.setState({ userPw: value })}
@@ -89,6 +97,14 @@ class LoginScreen extends Component {
               androidMode="spinner"
               date={this.state.date}
               onDateChange={date => this.setState({ date: date })}
+              customStyles={{
+                placeholderText: {
+                  color: 'white'
+                },
+                dateText: {
+                  color: 'white'
+                }
+              }}
             />
           </View>
           <View style={styles.thirdRow}>

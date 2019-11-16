@@ -19,12 +19,13 @@ class LoginScreen extends Component {
     } else {
       console.log(this.state)
       axios
-        .post("http://192.168.0.2:8090/user/login", {
+        .post("http://192.168.0.227:8090/user/login", {
           userId: this.state.userId,
           userPw: this.state.userPw
         })
         .then(res => {
           if(res.status===200){
+            alert("환영합니다! " + this.state.userId)
             this.props.navigation.navigate("Home",{isLogin:res.data.data}) 
           }
         });
@@ -64,6 +65,7 @@ class LoginScreen extends Component {
               <Input
                 label="Password"
                 placeholder="비밀번호를 입력해주세요"
+                secureTextEntry
                 onChangeText={value => this.setState({ userPw: value })}
                 leftIcon={<Feather
                   name='lock'
