@@ -9,7 +9,8 @@ class LoginScreen extends Component {
     super(props);
     this.state = {
       userId: "",
-      userPw: ""
+      userPw: "",
+      location:this.props.navigation.state.params.location
     };
   }
 
@@ -17,9 +18,8 @@ class LoginScreen extends Component {
     if (!( this.state.userId && this.state.userPw)) {
       alert("모두 입력해주세요!");
     } else {
-      console.log(this.state)
       axios
-        .post("http://192.168.0.227:8090/user/login", {
+        .post("http://192.168.0.74:8090/user/login", {
           userId: this.state.userId,
           userPw: this.state.userPw
         })
@@ -30,7 +30,9 @@ class LoginScreen extends Component {
             this.props.navigation.navigate("Home",{isLogin:res.data.data})
             } else{
               alert("Admin Page로 이동합니다.")
-              this.props.navigation.navigate("Admin",{})
+              this.props.navigation.navigate("Admin",{
+                location:this.state.location
+              })
             } 
           } 
         });

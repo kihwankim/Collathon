@@ -17,13 +17,31 @@ class MapScreen extends Component {
       location: this.props.navigation.state.params.location
         ? this.props.navigation.state.params.location
         : this.props.location,
-      isFont: false
+      isFont: false,
+      marker:[{latitude:this.props.navigation.state.params.location.latitude,longitude:this.props.navigation.state.params.location.longitude},{latitude:36.3665383,longitude:127.3446726}]
     };
   }
   componentDidMount() {}
+  makrMarker(){
+    return this.state.marker.map((data)=>{
+      return(
+        <Marker
+                coordinate={{
+                  latitude: data.latitude,
+                  longitude: data.longitude
+                }}
+                onPress={() =>
+                  this.props.navigation.navigate("Departure", {
+                    location: this.state.location
+                  })
+                }
+              />
+      )
+    })
+  }
   render() {
-    console.log(this.props);
 
+    console.log(this.props)
     return (
       <View style={{ backgroundColor: "#303144" }}>
         <MapView
@@ -39,17 +57,23 @@ class MapScreen extends Component {
           }}
           showsUserLocation={true}
         >
-          <Marker
-            coordinate={{
-              latitude: this.state.location.latitude,
-              longitude: this.state.location.longitude
-            }}
-            onPress={() =>
-              this.props.navigation.navigate("Departure", {
-                location: this.state.location
-              })
-            }
-          />
+          {
+            this.makrMarker()
+            // this.state.marker.map((item)=>{
+            //   <Marker
+            //     coordinate={{
+            //       latitude: item.latitude,
+            //       longitude: item.longitude
+            //     }}
+            //     onPress={() =>
+            //       this.props.navigation.navigate("Departure", {
+            //         location: this.state.location
+            //       })
+            //     }
+            //   />
+            // })
+
+          }
         </MapView>
         <View
           style={{
