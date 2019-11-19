@@ -32,6 +32,8 @@ class ArriveScreen extends Component {
         // console.log(myJSONResult.data.results)
         if (myJSONResult.status === 200) {
           myJSONResult = myJSONResult.data;
+          console.log("test");
+          
           console.log(myJSONResult.results[0].formatted_address);
           this.setState({
             location: {
@@ -51,6 +53,14 @@ class ArriveScreen extends Component {
       //   })
       // },1000)
     });
+  }
+  returnBicycle() {
+    console.log("return Bicycle : " + this.state);
+    console.log("lat : "  +this.state.location.latitude);
+    console.log("long : " + this.state.location.longitude);
+    // 이름(userId), bikeNum
+
+    this.props.navigation.navigate("Home")
   }
   render() {
     if (!this.state.isLoad) {
@@ -106,7 +116,7 @@ class ArriveScreen extends Component {
                 title="YES"
                 type="outline" 
                 buttonStyle={{marginRight:30,width:100, backgroundColor: "#4EB8CE"}}
-                onPress={() => this.props.navigation.navigate("Home")}
+                onPress={() => {this.returnBicycle()}}
                 titleStyle={{color: "white"}}
               />
 

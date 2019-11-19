@@ -18,11 +18,43 @@ class MapScreen extends Component {
         ? this.props.navigation.state.params.location
         : this.props.location,
       isFont: false,
-      marker:[{latitude:this.props.navigation.state.params.location.latitude,longitude:this.props.navigation.state.params.location.longitude},{latitude:36.3665383,longitude:127.3446726}]
+      marker: [],
+      isDo: true
     };
   }
-  componentDidMount() {}
-  makrMarker(){
+  componentWillMount() {
+    
+  }
+
+   makrMarker(){
+    if(this.state.isDo){
+      axios
+        .get("http://192.168.0.74:8090/bicycle/getAll")
+        .then(res => {
+          if(res.status===200){
+            const bicycleData = res.data.data.map(mapData => {
+                return {
+                  latitude : mapData.latitude,
+                  longitude : mapData.longitude
+                };
+              }
+            );
+          
+              this.setState({
+                location: this.props.navigation.state.params.location
+                  ? this.props.navigation.state.params.location
+                  : this.props.location,
+                isFont: false,
+                marker: bicycleData,
+                isDo: false
+              });
+            }
+          }
+        );  
+    }
+  }
+
+  makeMapObject(){
     return this.state.marker.map((data)=>{
       return(
         <Marker
@@ -39,9 +71,12 @@ class MapScreen extends Component {
       )
     })
   }
-  render() {
 
-    console.log(this.props)
+  render() {
+    console.log("insert render ===================== ");
+    const markMapData = this.makeMapObject();
+
+    this.makrMarker();
     return (
       <View style={{ backgroundColor: "#303144" }}>
         <MapView
@@ -58,21 +93,7 @@ class MapScreen extends Component {
           showsUserLocation={true}
         >
           {
-            this.makrMarker()
-            // this.state.marker.map((item)=>{
-            //   <Marker
-            //     coordinate={{
-            //       latitude: item.latitude,
-            //       longitude: item.longitude
-            //     }}
-            //     onPress={() =>
-            //       this.props.navigation.navigate("Departure", {
-            //         location: this.state.location
-            //       })
-            //     }
-            //   />
-            // })
-
+            markMapData
           }
         </MapView>
         <View
