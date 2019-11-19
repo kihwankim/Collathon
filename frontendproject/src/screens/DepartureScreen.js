@@ -27,13 +27,15 @@ class DepartureScreen extends Component {
   handleBarCodeScanned = ({ type, data }) => {
     this.setState({ scanned: true});
     Vibration.vibrate(500)
-    axios.get("http://192.168.0.2:8090/bicycle/rent",{
+    console.log(data);
+    
+    axios.get("http://192.168.0.74:8090/rental/rent",{
       params:{
         bicycleNumber:data,
         userId:this.state.user
       }
     }).then(res=>{
-      console.log(res.data)
+      alert(data + " 번 자전거의 사용을 시작합니다.");
     })
   };
   render() {
