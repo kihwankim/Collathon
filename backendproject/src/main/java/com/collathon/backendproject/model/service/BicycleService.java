@@ -57,13 +57,13 @@ public class BicycleService implements ServiceInt<Bicycle> {
     @Override
     public boolean rent(long userId, long bicycleNumber) {
         Date nowDate = new Date();
-        Date returnDate = calculateDate(nowDate);
+        Date returnDate = this.calculateDate(nowDate);
 
         Bicycle bicycle = Bicycle.builder()
                 .bicycleNumber(bicycleNumber)
                 .nowUsingPersonId(userId)
                 .startDate(nowDate)
-                .startDate(returnDate)
+                .endDate(returnDate)
                 .build();
 
         return this.bicycleDao.rent(bicycle);

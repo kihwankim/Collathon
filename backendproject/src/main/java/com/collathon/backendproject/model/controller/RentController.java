@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.LinkedList;
 import java.util.List;
 
 @RestController
@@ -68,7 +69,14 @@ public class RentController {
         Bicycle beforeBicycleData = this.bicycleService.getDataFromId(bicycleNumber);
 
         List<String> beforeUsedUserList = beforeBicycleData.getLastUserId();
+        if (beforeUsedUserList == null) {
+            beforeUsedUserList = new LinkedList<>();
+        }
+
         beforeUsedUserList.add(beforeUserData.getUserId());
+        if (beforeUsedUserList.size() > 5 && !beforeUsedUserList.remove(beforeUserData.getUserId())) {
+            beforeUsedUserList.remove(0);
+        }
 
         Bicycle bicycle = Bicycle.builder()
                 .bicycleNumber(bicycleNumber)
