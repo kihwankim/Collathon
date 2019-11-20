@@ -47,8 +47,6 @@ class LoginScreen extends Component {
             style={{
               width: 300,
               height: 300,
-              borderWidth: 1,
-              borderColor: "black"
             }}
           />
         </View>
@@ -111,8 +109,6 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
-    borderWidth: 1,
-    borderColor: "black",
     height: "50%",
    
   },
@@ -123,13 +119,9 @@ const styles = StyleSheet.create({
   secondRow: {
     flex: 1,
     flexDirection: "column",
-    borderWidth: 1,
-    borderColor: "black"
   },
   thirdRow: {
     flex: 1,
-    borderWidth: 1,
-    borderColor: "black",
     alignItems: "center",
     justifyContent: "center",
     flexDirection:"row",

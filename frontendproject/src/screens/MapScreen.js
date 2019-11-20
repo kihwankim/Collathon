@@ -22,54 +22,49 @@ class MapScreen extends Component {
       isDo: true
     };
   }
-  componentWillMount() {
-    
-  }
+  componentWillMount() {}
 
-   makrMarker(){
-    if(this.state.isDo){
-      axios
-        .get("http://192.168.0.74:8090/bicycle/getAll")
-        .then(res => {
-          if(res.status===200){
-            const bicycleData = res.data.data.map(mapData => {
-                return {
-                  latitude : mapData.latitude,
-                  longitude : mapData.longitude
-                };
-              }
-            );
-          
-              this.setState({
-                location: this.props.navigation.state.params.location
-                  ? this.props.navigation.state.params.location
-                  : this.props.location,
-                isFont: false,
-                marker: bicycleData,
-                isDo: false
-              });
-            }
-          }
-        );  
+  makrMarker() {
+    if (this.state.isDo) {
+      axios.get("http://192.168.0.74:8090/bicycle/getAll").then(res => {
+        if (res.status === 200) {
+          const bicycleData = res.data.data.map(mapData => {
+            return {
+              latitude: mapData.latitude,
+              longitude: mapData.longitude
+            };
+          });
+
+          this.setState({
+            location: this.props.navigation.state.params.location
+              ? this.props.navigation.state.params.location
+              : this.props.location,
+            isFont: false,
+            marker: bicycleData,
+            isDo: false
+          });
+        }
+      });
     }
   }
 
-  makeMapObject(){
-    return this.state.marker.map((data)=>{
-      return(
+  makeMapObject() {
+    return this.state.marker.map((data, index) => {
+      return (
         <Marker
-                coordinate={{
-                  latitude: data.latitude,
-                  longitude: data.longitude
-                }}
-                onPress={() =>
-                  this.props.navigation.navigate("Departure", {
-                    location: this.state.location
-                  })
-                }
-              />
-      )
-    })
+          key={index}
+          coordinate={{
+            latitude: data.latitude,
+            longitude: data.longitude
+          }}
+          onPress={() =>
+            this.props.navigation.navigate("Departure", {
+              location: this.state.location
+            })
+          }
+        />
+      );
+    });
   }
 
   render() {
@@ -92,9 +87,7 @@ class MapScreen extends Component {
           }}
           showsUserLocation={true}
         >
-          {
-            markMapData
-          }
+          {markMapData}
         </MapView>
         <View
           style={{

@@ -18,7 +18,8 @@ class AdminScreen extends Component {
     this.state = {
       location: this.props.navigation.state.params.location,
       bikeList: [],
-      remove:0
+      remove: 0,
+      check:false
     };
   }
   register() {
@@ -29,7 +30,8 @@ class AdminScreen extends Component {
       })
       .then(res => {
         if (res.status == 200) {
-          alert(res.data.message+"번 등록 완료");
+          this.setState({bikeList:res.data.data})
+          alert(res.data.message + "번 등록 완료");
         } else {
           alert("등록에 실패했습니다.");
         }
@@ -37,73 +39,84 @@ class AdminScreen extends Component {
   }
 
   componentWillMount() {
-    axios.get("http://192.168.0.74:8090/bicycle/getAll").then(res => {
-      this.setState({bikeList:res.data})
+    axios.get("http://192.168.0.74:8090/bicycle/getAll").then(res => { 
+    this.setState({ bikeList: res.data.data });
     });
   }
-  delete(v){
-    axios.post("http://192.168.0.74:8090/bicycle")
-    
-    
+  delete(v) {
+    axios.delete(`http://192.168.0.74:8090/bicycle/delete/${v}`).then(res=>{
+      if(res.status==200){
+        this.setState({bikeList:res.data.data})
+      }
+    })
   }
-  render() {
-    if(!this.state.bikeList){
-        <View>
-            <Text>
 
-            ...Loading
-            </Text>
-        </View>
-    }else{
-
-    
-    return (
-      <View
-        style={{ width: "100%", height: "100%", backgroundColor: "#303144" }}
-      >
-        <View style={styles.logo}>
-          <Image
-            source={require("../../assets/logo.png")}
-            style={{
-              width: 300,
-              height: 300,
-              borderWidth: 1,
-              borderColor: "black"
-            }}
-          />
-        </View>
-        <View style={styles.firstRow}>
-        <View style={styles.thirdRow}>
-          <Button
-            title="Register"
-            buttonStyle={{ width: 100, backgroundColor: "#4EB8CE" }}
-            type="outline"
-            onPress={this.register.bind(this)}
-          />
-          <Button
-            title="Delete"
-            onPress={this.delete.bind(this)}
-            buttonStyle={{ width: 100, backgroundColor: "#4EB8CE" }}
-            type="outline"
-          />
-           
-        
-        </View>
-           <ScrollView style={styles.secondRow}>
-               {
-                  this.state.bikeList.map((item, index) => (
-                     <TouchableOpacity key={item.bikeNum} style={styles.thirdRow} onPress={()=>{
-                         this.delete(item.bikeNum)
-                     }}>
-                         <Text style={{fontSize:30,color:"white",textAlign:"center"}}>{item.bikeNum}</Text>
-                     </TouchableOpacity>
-                  ))
-               }
-            </ScrollView>
-            </View>
-      </View>
+  getBikeListOpacity() {
+    return (this.state.bikeList.map((item, index) => {
+      return (
+        <TouchableOpacity
+          key={item.bicycleNumber}
+          style={styles.thirdRow}
+          onPress={() => {
+            this.delete(item.bicycleNumber);
+          }}
+        >
+          <Text style={{ fontSize: 30, color: "white", textAlign: "center" }}>
+            {item.bicycleNumber}
+          </Text>
+        </TouchableOpacity>
+      );
+    })
     );
-            }
+  }
+
+  render() {
+    if (!this.state.bikeList) {
+      return (
+        <View>
+          <Text>...Loading</Text>
+        </View>
+      );
+    } else {
+      var List = this.getBikeListOpacity.bind(this);
+      return (
+        <View
+          style={{ width: "100%", height: "100%", backgroundColor: "#303144" }}
+        >
+          <View style={styles.logo}>
+            <Image
+              source={require("../../assets/logo.png")}
+              style={{
+                width: 300,
+                height: 300,
+                borderWidth: 1,
+                borderColor: "black"
+              }}
+            />
+          </View>
+          <View style={styles.firstRow}>
+            <View style={styles.thirdRow}>
+              <Button
+                title="Register"
+                buttonStyle={{ width: 100, backgroundColor: "#4EB8CE" }}
+                type="outline"
+                onPress={this.register.bind(this)}
+              />
+              <Button
+                title="Delete"
+                onPress={this.delete.bind(this)}
+                buttonStyle={{ width: 100, backgroundColor: "#4EB8CE" }}
+                type="outline"
+              />
+            </View>
+            <ScrollView style={styles.secondRow}>
+              <List/>
+              
+            </ScrollView>
+          </View>
+        </View>
+      );
+    }
   }
 }
 
@@ -114,7 +127,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     borderWidth: 1,
-    borderColor: "black",
     height: "50%"
   },
   firstRow: {
@@ -124,13 +136,10 @@ const styles = StyleSheet.create({
   secondRow: {
     flex: 1,
     flexDirection: "column",
-    borderWidth: 1,
-    borderColor: "black"
   },
   thirdRow: {
     flex: 1,
     borderWidth: 1,
-    borderColor: "black",
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "row"
