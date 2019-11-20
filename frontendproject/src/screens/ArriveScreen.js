@@ -13,14 +13,13 @@ class ArriveScreen extends Component {
     this.state = {
       location: this.props.navigation.state.params.location,
       isLoad: false,
-      time:moment().format("LTS")
+      time: 0,
+      user: this.props.navigation.state.params.user
     };
   }
 
   componentDidMount() {
     navigator.geolocation.getCurrentPosition(async position => {
-      // console.log(position)
-
       var geocode =
         "https://maps.googleapis.com/maps/api/geocode/json?latlng=" +
         position.coords.latitude +
@@ -29,12 +28,8 @@ class ArriveScreen extends Component {
         "&key=AIzaSyBgEzBTBpggPy6ouKjcIaKkNHlyAuKZ59Q";
 
       axios.post(geocode, {}).then(myJSONResult => {
-        // console.log(myJSONResult.data.results)
         if (myJSONResult.status === 200) {
           myJSONResult = myJSONResult.data;
-          console.log("test");
-          
-          console.log(myJSONResult.results[0].formatted_address);
           this.setState({
             location: {
               name: myJSONResult.results[0].formatted_address,
@@ -45,22 +40,30 @@ class ArriveScreen extends Component {
           });
         }
       });
-      console.log("setup");
-      console.log(this.state.location);
-      // setInterval(()=>{
-      //   this.setState({
-      //     time:moment().format("LTS")
-      //   })
-      // },1000)
+      setInterval(() => {
+        this.setState({
+          time: this.state.time + 1
+        });
+      }, 1000);
     });
   }
   returnBicycle() {
-    console.log("return Bicycle : " + this.state);
-    console.log("lat : "  +this.state.location.latitude);
-    console.log("long : " + this.state.location.longitude);
-    // 이름(userId), bikeNum
-
-    this.props.navigation.navigate("Home")
+    console.log(this.state.user);
+    axios
+      .get("http://192.168.0.74:8090/rental/return", {
+        params: {
+          longitude: this.state.location.longitude,
+          latitude: this.state.location.latitude,
+          bicycleNumber: this.state.user.usingBicycle,
+          userId: this.state.user.id
+        }
+      })
+      .then(res => {
+        if (res.status == 200) {
+          alert("반환 완료");
+        }
+      });
+    this.props.navigation.navigate("Home");
   }
   render() {
     if (!this.state.isLoad) {
@@ -71,7 +74,9 @@ class ArriveScreen extends Component {
       );
     } else {
       return (
-        <View style={{backgroundColor:"#303144", width:"100%", height:"100%"}}>
+        <View
+          style={{ backgroundColor: "#303144", width: "100%", height: "100%" }}
+        >
           <MapView
             initialRegion={{
               latitude: this.state.location.latitude,
@@ -109,23 +114,28 @@ class ArriveScreen extends Component {
             <View style={styles.secondRow}>
               <Text style={styles.fontStyle}>이용 누적 시간</Text>
               <Text style={styles.fontStyle}> {this.state.time}</Text>
-
             </View>
             <View style={styles.thirdRow}>
               <Button
                 title="YES"
-                type="outline" 
-                buttonStyle={{marginRight:30,width:100, backgroundColor: "#4EB8CE"}}
-                onPress={() => {this.returnBicycle()}}
-                titleStyle={{color: "white"}}
+                type="outline"
+                buttonStyle={{
+                  marginRight: 30,
+                  width: 100,
+                  backgroundColor: "#4EB8CE"
+                }}
+                onPress={() => {
+                  this.returnBicycle();
+                }}
+                titleStyle={{ color: "white" }}
               />
 
               <Button
                 title="NO"
                 type="outline"
-                buttonStyle={{width:100, backgroundColor: "#4EB8CE"}}
+                buttonStyle={{ width: 100, backgroundColor: "#4EB8CE" }}
                 onPress={() => this.props.navigation.navigate("Running")}
-                titleStyle={{color: "white"}}
+                titleStyle={{ color: "white" }}
               />
             </View>
           </View>
@@ -141,34 +151,26 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
-    borderWidth: 1,
-    borderColor: "black",
     backgroundColor: "#222431"
   },
   firstRow: {
- 
     flexDirection: "column"
   },
   secondRow: {
-
     flexDirection: "column",
-    borderWidth: 1,
-    borderColor: "black",
-    alignItems:"center"
+    alignItems: "center"
   },
   thirdRow: {
-  
     borderWidth: 1,
-    borderColor: "black",
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "row"
   },
-  fontStyle:{
-      marginBottom:20,
-      fontSize:15,
-      fontFamily:"sunflower",
-      color:"white"
+  fontStyle: {
+    marginBottom: 20,
+    fontSize: 15,
+    fontFamily: "sunflower",
+    color: "white"
   }
 });
 

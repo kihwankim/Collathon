@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { StyleSheet, Text, View, Button } from "react-native";
 // import { PacmanIndicator } from "react-native-indicators";
-
+import { DotIndicator } from "react-native-indicators";
 class RunningScreen extends Component {
   constructor(props) {
     super(props);
@@ -12,13 +12,14 @@ class RunningScreen extends Component {
       <View style={styles.container}>
         {/* <PacmanIndicator color="black" /> */}
         <Text style={styles.fontStyle}>현재 이용중입니다!{"\n"}{"\n"}</Text>
-        <Button
+        {/* <Button
           title="End"
           style={{backgroundColor: "#4EB8CE"}}
           onPress={() =>
             this.props.navigation.navigate("Arrive", { location: {} })
           }
-        />
+        /> */}
+        <DotIndicator style={{width:200}}/>
       </View>
     );
   }

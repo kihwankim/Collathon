@@ -39,11 +39,11 @@ class HomeScreen extends Component {
       });
     });
   }
-  componentWillReceiveProps({navigation}) {
+  componentWillReceiveProps({ navigation }) {
     this.setState({
       isLogin: navigation.state.params.isLogin
     });
-    console.log(navigation.state.params.isLogin)
+    console.log(navigation.state.params.isLogin);
   }
   render() {
     if (!this.state.isLoad) {
@@ -82,17 +82,14 @@ class HomeScreen extends Component {
 
       return (
         <ImageBackground
-          style={{ width: "100%", height: "100%",backgroundColor:"#303144" }}
-          // source={require("../../assets/bike.jpg")}
+          style={{ width: "100%", height: "100%", backgroundColor: "#303144" }}
         >
           <View style={styles.logo}>
             <Image
               source={require("../../assets/logo_blue.png")}
               style={{
                 width: 300,
-                height: 300,
-                borderWidth: 1,
-                borderColor: "black"
+                height: 300
               }}
             />
           </View>
@@ -130,10 +127,11 @@ class HomeScreen extends Component {
                       alert("로그인을 먼저 해주세요");
                     } else {
                       if (this.state.isLogin.usingBicycle === -1) {
-                        Alert.alert("Wait","현재 이용중이지 않습니다!");
+                        Alert.alert("Wait", "현재 이용중이지 않습니다!");
                       } else {
                         this.props.navigation.navigate("Arrive", {
-                          location: this.state.location
+                          location: this.state.location,
+                          user: this.state.isLogin
                         });
                       }
                     }
@@ -161,8 +159,6 @@ class HomeScreen extends Component {
                   />
                 </TouchableOpacity>
               </View>
-              {/* <Button title="도착" onPress={()=>this.props.navigation.navigate("Arrive",{location:this.state.location})}/> */}
-              {/* <Button title="지도보기" onPress={()=>this.props.navigation.navigate("Map",{location:this.state.location})}/> */}
               <View style={styles.thirdRow}>{login}</View>
             </View>
           </View>
@@ -178,21 +174,19 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor:"#303144"
+    backgroundColor: "#303144"
   },
   firstRow: {
     flex: 1,
-    flexDirection: "column",
- 
+    flexDirection: "column"
   },
   secondRow: {
     flex: 1,
-    flexDirection: "row",
-   
+    flexDirection: "row"
   },
   thirdRow: {
     flex: 1,
-    
+
     alignItems: "center",
     justifyContent: "center"
   }
