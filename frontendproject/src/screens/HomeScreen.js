@@ -1,15 +1,12 @@
 import React, { Component } from "react";
 import {
   StyleSheet,
-  Text,
   View,
-  Button,
   Image,
   ImageBackground,
   TouchableOpacity,
   Alert
 } from "react-native";
-import axios from "axios";
 import { DotIndicator } from "react-native-indicators";
 import * as Font from "expo-font";
 
@@ -18,12 +15,11 @@ class HomeScreen extends Component {
     super(props);
     this.state = {
       location: {},
-      isLoad: false,
       isLogin: false
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     Font.loadAsync({
       sunflower: require("../../assets/Sunflower-Light.ttf")
     }).then(() => {
@@ -39,12 +35,14 @@ class HomeScreen extends Component {
       });
     });
   }
+
   componentWillReceiveProps({ navigation }) {
     this.setState({
       isLogin: navigation.state.params.isLogin
     });
     console.log(navigation.state.params.isLogin);
   }
+  
   render() {
     if (!this.state.isLoad) {
       return (
@@ -104,7 +102,13 @@ class HomeScreen extends Component {
                       if (this.state.isLogin.usingBicycle === -1) {
                         this.props.navigation.navigate("Departure", {
                           location: this.state.location,
-                          user: this.state.isLogin.id
+                          user: this.state.isLogin.id,
+                          onGoBack: (isLogin) => {
+                            alert(isLogin.usingBicycle + "를 자전거 대여 완료하였습니다.");
+                            this.setState({isLogin: isLogin});
+                            console.log("result : ");
+                            console.log(this.state.isLogin);
+                          }
                         });
                       } else {
                         this.props.navigation.navigate("Running", {
@@ -131,7 +135,10 @@ class HomeScreen extends Component {
                       } else {
                         this.props.navigation.navigate("Arrive", {
                           location: this.state.location,
-                          user: this.state.isLogin
+                          user: this.state.isLogin,
+                          onGoBack: (isLogin) => {
+                            this.setState({isLogin: isLogin})
+                          }
                         });
                       }
                     }

@@ -1,16 +1,15 @@
 import React from 'react';
 import {createStackNavigator} from 'react-navigation-stack'
-import {createAppContainer,createSwitchNavigator} from 'react-navigation'
+import {createAppContainer} from 'react-navigation'
 import HomeScreen from './src/screens/HomeScreen'
-import ArriveScreen from "./src/screens/ArriveScreen"
-import DepartureScreen from "./src/screens/DepartureScreen"
-import MapScreen from "./src/screens/MapScreen"
-import LoginScreen from "./src/screens/LoginScreen"
-import SignupScreen from "./src/screens/SignupScreen"
-import RunningScreen from "./src/screens/RunningScreen"
-import AdminScreen from "./src/screens/AdminScreen"
-import {createBottomTabNavigator,BottomTabBar} from "react-navigation-tabs"
-import {createMaterialBottomTabNavigator} from "react-navigation-material-bottom-tabs"
+import ArriveScreen from "./src/screens/rent/ArriveScreen"
+import DepartureScreen from "./src/screens/rent/DepartureScreen"
+import MapScreen from "./src/screens/map/MapScreen"
+import LoginScreen from "./src/screens/user/LoginScreen"
+import SignupScreen from "./src/screens/user/SignupScreen"
+import RunningScreen from "./src/screens/rent/RunningScreen"
+import AdminScreen from "./src/screens/admin/AdminScreen"
+import {BottomTabBar} from "react-navigation-tabs"
  const TabBarComponent =props=>(
   <BottomTabBar {...props}/>
 )
@@ -36,22 +35,5 @@ const navigator = createStackNavigator(
     }
   }
 )
-// import { StyleSheet, Text, View } from 'react-native';
 
-// export default function App() {
-//   return (
-//     <View style={styles.container}>
-//       <Text>Open up App.js to start working on your app!</Text>
-//     </View>
-//   );
-// }
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     backgroundColor: '#fff',
-//     alignItems: 'center',
-//     justifyContent: 'center',
-//   },
-// });
 export default createAppContainer(navigator);
