@@ -50,7 +50,7 @@ class ArriveScreen extends Component {
   returnBicycle() {
     console.log(this.state.user);
     axios
-      .get("http://192.168.0.74:8090/rental/return", {
+      .get("http://192.168.1.109:8090/rental/return", {
         params: {
           longitude: this.state.location.longitude,
           latitude: this.state.location.latitude,

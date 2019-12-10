@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { StyleSheet,Vibration, Text, View, Button, AppRegistry } from "react-native";
-import Constants from "expo-constants";
 import * as Permissions from "expo-permissions";
 import axios from "axios"
 import { BarCodeScanner } from "expo-barcode-scanner";
+import {ROOT_URL} from '../url/url';
 
 class DepartureScreen extends Component {
   constructor(props) {
@@ -29,7 +29,7 @@ class DepartureScreen extends Component {
     Vibration.vibrate(500)
     console.log(data);
     
-    axios.get("http://192.168.0.74:8090/rental/rent",{
+    axios.get(`${ROOT_URL}/rental/rent`,{
       params:{
         bicycleNumber:data,
         userId:this.state.user

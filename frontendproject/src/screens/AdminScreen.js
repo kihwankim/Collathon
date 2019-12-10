@@ -11,6 +11,7 @@ import {
   AppRegistry
 } from "react-native";
 import { Button } from "react-native-elements";
+import {ROOT_URL} from '../url/url';
 
 class AdminScreen extends Component {
   constructor(props) {
@@ -24,7 +25,7 @@ class AdminScreen extends Component {
   }
   register() {
     axios
-      .post("http://192.168.0.74:8090/bicycle/save", {
+      .post(`${ROOT_URL}/bicycle/save`, {
         longitude: this.state.location.longitude,
         latitude: this.state.location.latitude
       })
@@ -39,12 +40,12 @@ class AdminScreen extends Component {
   }
 
   componentWillMount() {
-    axios.get("http://192.168.0.74:8090/bicycle/getAll").then(res => { 
+    axios.get(`${ROOT_URL}/bicycle/getAll`).then(res => { 
     this.setState({ bikeList: res.data.data });
     });
   }
   delete(v) {
-    axios.delete(`http://192.168.0.74:8090/bicycle/delete/${v}`).then(res=>{
+    axios.delete(`${ROOT_URL}/bicycle/delete/${v}`).then(res=>{
       if(res.status==200){
         this.setState({bikeList:res.data.data})
       }

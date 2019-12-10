@@ -4,6 +4,8 @@ import axios from "axios";
 import {Input,Button} from "react-native-elements"
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
+import {ROOT_URL} from '../url/url'
+
 class LoginScreen extends Component {
   constructor(props) {
     super(props);
@@ -19,7 +21,7 @@ class LoginScreen extends Component {
       alert("모두 입력해주세요!");
     } else {
       axios
-        .post("http://192.168.0.74:8090/user/login", {
+        .post(`${ROOT_URL}/user/login`, {
           userId: this.state.userId,
           userPw: this.state.userPw
         })

@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import axios from "axios";
 import MapView, { Marker } from "react-native-maps";
+import {ROOT_URL} from "../url/url";
 
 class MapScreen extends Component {
   constructor(props) {
@@ -26,7 +27,7 @@ class MapScreen extends Component {
 
   makrMarker() {
     if (this.state.isDo) {
-      axios.get("http://192.168.0.74:8090/bicycle/getAll").then(res => {
+      axios.get(`${ROOT_URL}/bicycle/getAll`).then(res => {
         if (res.status === 200) {
           const bicycleData = res.data.data.map(mapData => {
             return {

@@ -35,7 +35,7 @@ class LoginScreen extends Component {
         parseInt(splitDate[2])
       );
       axios
-        .post("http://192.168.0.74:8090/user/save", {
+        .post("http://192.168.1.109:8090/user/save", {
           name: this.state.userId,
           userId: this.state.userId,
           userPw: this.state.userPw,
